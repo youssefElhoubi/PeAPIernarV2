@@ -10,10 +10,10 @@ type loginFrom = {
 };
 
 const Login: React.FC = () => {
-    const [formResult, setformResult] = useState();
-    const [token,setToken] = useState(null);
+    const [formResult, setformResult]: any = useState();
+    const [token, setToken]: any = useState(null);
     const { register, formState: { errors }, handleSubmit } = useForm<loginFrom>()
-    const submitData = async (data: any) => {
+    const submitData = async (data: loginFrom) => {
         console.log(data);
         const response: any = await fetch("http://peapirineV2.test/api/auth/singin", {
             method: "post",
@@ -24,9 +24,15 @@ const Login: React.FC = () => {
             },
         });
         const result = await response.json();
-        console.log(response);
-        
 
+        if (!response.ok) {
+            console.log(result.message);
+            return setformResult(result.message);
+        }
+        setformResult();
+        setToken(result.token);
+        console.log(token);
+        localStorage.setItem("token", token);
     }
     return (
         <>
@@ -68,7 +74,7 @@ const Login: React.FC = () => {
                 {errors.password && <span>{errors.password.message}</span>}
 
                 <button type="submit">Log In</button>
-
+                <span>{formResult}</span>
                 <div className={styles.social}>
                     <div className={styles.go}><i className="fab fa-google"></i> Google</div>
                     <div className={styles.fb}><i className="fab fa-facebook"></i> Facebook</div>
