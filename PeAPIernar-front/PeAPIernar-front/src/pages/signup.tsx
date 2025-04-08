@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from "react-hook-form";
-import styles from "../styles/login.module.css";
+import { useForm } from 'react-hook-form';
 
 type SignUpForm = {
     name: string;
@@ -9,96 +8,103 @@ type SignUpForm = {
 };
 
 const SignUp: React.FC = () => {
-    const [formResult, setFormResult] = useState<string | undefined>();
-    const [token, setToken] = useState<string | null>(null);
+    const [formResult, setFormResult]: any = useState();
+    const [token, setToken]: any = useState(null);
 
-    const { register, formState: { errors }, handleSubmit } = useForm<SignUpForm>();
+    const { register, handleSubmit, formState: { errors } } = useForm<SignUpForm>();
 
     const submitData = async (data: SignUpForm) => {
-        try {
-            console.log({...data,role:"client"});
-            
-            const response = await fetch("http://peapirineV2.test/api/auth/singup", {
-                method: "POST",
-                body: JSON.stringify({...data,role:"client"}),
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                },
-            });
+        const response = await fetch('http://peapirineV2.test/api/auth/signup', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        });
+        const result = await response.json();
 
-            const result = await response.json();
-
-            if (!response.ok) {
-                console.error(result.message);
-                return setFormResult(result.message);
-            }
-
-            setFormResult(undefined);
-            setToken(result.token);
-            localStorage.setItem("token", result.token);
-            console.log(result.token);
-        } catch (error) {
-            console.error("Signup failed:", error);
-            setFormResult("An error occurred during sign up.");
+        if (!response.ok) {
+            return setFormResult(result.message);
         }
+
+        setFormResult(null);
+        setToken(result.token);
+        localStorage.setItem('token', result.token);
     };
 
     return (
-        <>
-            <div className={styles.background}>
-                <div className={styles.shape}></div>
-                <div className={styles.shape}></div>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-200 via-pink-100 to-blue-200 p-4">
+            <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8">
+                <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">Create Account</h2>
+                <p className="text-sm text-gray-500 text-center mb-6">Join us by filling in your details</p>
+
+                <form onSubmit={handleSubmit(submitData)} className="space-y-4">
+                    {/* Name */}
+                    <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name*</label>
+                        <input
+                            id="name"
+                            type="text"
+                            {...register('name', { required: 'Name is required' })}
+                            className="w-full px-4 py-3 rounded-xl bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        />
+                        {errors.name && <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>}
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email*</label>
+                        <input
+                            id="email"
+                            type="email"
+                            {...register('email', {
+                                required: 'Email is required',
+                                pattern: {
+                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                    message: 'Invalid email address',
+                                },
+                            })}
+                            className="w-full px-4 py-3 rounded-xl bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        />
+                        {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>}
+                    </div>
+
+                    {/* Password */}
+                    <div>
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password*</label>
+                        <input
+                            id="password"
+                            type="password"
+                            {...register('password', {
+                                required: 'Password is required',
+                                minLength: {
+                                    value: 8,
+                                    message: 'Password must be at least 8 characters',
+                                },
+                            })}
+                            className="w-full px-4 py-3 rounded-xl bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        />
+                        {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>}
+                    </div>
+
+                    {/* Error message */}
+                    {formResult && <div className="text-red-500 text-sm">{formResult}</div>}
+
+                    {/* Submit Button */}
+                    <button type="submit" className="w-full py-3 px-6 text-white font-semibold bg-blue-500 hover:bg-blue-600 transition-all duration-200 rounded-xl">
+                        Sign Up
+                    </button>
+                </form>
+
+                <p className="text-sm text-center text-gray-600 mt-6">
+                    Already have an account?{' '}
+                    <a href="/" className="text-blue-500 font-medium hover:underline">
+                        Sign In
+                    </a>
+                </p>
             </div>
-            <form onSubmit={handleSubmit(submitData)} className={styles.form}>
-                <h3>Sign Up</h3>
-
-                <label htmlFor="name">Name</label>
-                <input
-                    id="name"
-                    placeholder="Full Name"
-                    {...register("name", { required: "Name is required" })}
-                />
-                {errors.name && <span>{errors.name.message}</span>}
-
-                <label htmlFor="email">Email</label>
-                <input
-                    id="email"
-                    placeholder="Email"
-                    {...register("email", {
-                        required: "Email is required",
-                        pattern: {
-                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                            message: "Invalid email address",
-                        },
-                    })}
-                />
-                {errors.email && <span>{errors.email.message}</span>}
-
-                <label htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Password"
-                    {...register("password", {
-                        required: "Password is required",
-                        minLength: {
-                            value: 8,
-                            message: "Password must be at least 8 characters long",
-                        },
-                    })}
-                />
-                {errors.password && <span>{errors.password.message}</span>}
-
-                <button type="submit">Sign Up</button>
-                {formResult && <span>{formResult}</span>}
-
-                <div className={styles.social}>
-                    <div className={styles.go}><i className="fab fa-google"></i> Google</div>
-                    <div className={styles.fb}><i className="fab fa-facebook"></i> Facebook</div>
-                </div>
-            </form>
-        </>
+        </div>
     );
 };
 
