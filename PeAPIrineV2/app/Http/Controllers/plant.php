@@ -17,6 +17,10 @@ class plant extends Controller
     {
         $this->plantDAO = $plantDAO;
     }
+    public function all(){
+        $plats= plants::all();
+        return response()->json(["data"=>$plats],Response::HTTP_OK);
+    } 
     public function addPlant(Request $request)
     {
         try {
