@@ -1,34 +1,37 @@
-import { useState , useEffect } from "react"
-import React  from 'react'
+import { useState, useEffect } from "react"
+import React from 'react'
 
 
-type plantinfo= {
-    title :string,
-    
+type plantinfo = {
+    title: string,
+    imageUrl: string,
+    descreption: string,
+    price : number,
 }
 
 
 
 
-const PlantCard :React.FC = () => {
+const PlantCard: React.FC<plantinfo> = ({ title, imageUrl, descreption , price }) => {
     return (
         <>
             <div className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
                 <div className="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
                     <img
-                        src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80"
+                        src={imageUrl}
                         alt="card-image"
                     />
                 </div>
                 <div className="p-4">
                     <h6 className="mb-2 text-slate-800 text-xl font-semibold">
-                        Website Review Check
+                        {title}
                     </h6>
                     <p className="text-slate-600 leading-normal font-light">
-                        The place is close to Barceloneta Beach and bus stop just 2 min by walk
-                        and near to "Naviglio" where you can enjoy the main night life in
-                        Barcelona.
+                        {descreption}
                     </p>
+                    <h6 className="mb-2 text-slate-800 text-xl font-semibold">
+                        {price}
+                    </h6>
                 </div>
                 <div className="px-4 pb-4 pt-0 mt-2">
                     <button
