@@ -10,8 +10,8 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login/>}></Route>
-        <Route path="/signup" element={<SignUp/>}></Route>
+        <Route path="/" element={<Login/>}/>
+        <Route path="/signup" element={<SignUp/>}/>
         <Route path="user/home" element = {<Privet Componnet={Home} />} />
       </Routes>
     </BrowserRouter>

@@ -26,9 +26,10 @@ class OrderController extends Controller
         try {
             $validatedData = $request->validate([
                 'user_id' => 'required|exists:users,id',
-                'plant_id' => 'required|exists:plants,id',
+                'plant_id' => 'required|exists:palnts,id',
                 'qauntity' => 'required|numeric|min:1'
             ]);
+            // return response()->json(["got here"], Response::HTTP_CREATED);
 
             $order = $this->orderDAO->createOrder($validatedData);
 

@@ -9,7 +9,7 @@ const decode = async (token : string) => {
         });
         const data = await response.json();
         if (response.ok) {
-            return data
+            return data.data
         }
         return false;
     } catch (error) {

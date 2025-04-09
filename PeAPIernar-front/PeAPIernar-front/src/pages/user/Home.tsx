@@ -22,8 +22,7 @@ const Home: React.FC = () => {
 
         }
         fetchPlants();
-    }, [])
-    console.log(palnts);
+    }, []);
     return (
         <>
             <Header />

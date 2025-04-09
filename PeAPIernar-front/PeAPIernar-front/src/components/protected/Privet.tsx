@@ -30,8 +30,6 @@ const Privet: React.FC<Props> = ({ Componnet }) => {
                         Authorization: token,
                     },
                 });
-
-                console.log("Validation response:", response);
                 setIsAuth(response.ok);
             } catch (error) {
                 console.error("Validation error:", error);
