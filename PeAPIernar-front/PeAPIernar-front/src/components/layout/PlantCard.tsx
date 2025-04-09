@@ -3,29 +3,32 @@ import React from 'react'
 
 
 type plantinfo = {
-    title: string,
-    imageUrl: string,
-    descreption: string,
-    price : number,
+    id: number,
+    name: string,
+    description: string,
+    price: number,
+    slug: string,
+    category_id: number,
 }
 
 
-const PlantCard: React.FC<plantinfo> = ({ title, imageUrl, descreption , price }) => {
+
+const PlantCard: React.FC<plantinfo> = ({ id, name, description, price, slug, category_id,}) => {
     return (
         <>
-            <div className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+            <div className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-80">
                 <div className="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
                     <img
-                        src={imageUrl}
-                        alt="card-image"
+                        src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQVALhDsT_gwfVxmJh_Mgi8XPvyNDelax0-Jw2se5en_6TRuEdpIIqLuU1sS06x08oeaIFTFjKmOTC7op0vWi3GgcYZoVCLUK_V4SilLg"
+                        alt={slug}
                     />
                 </div>
                 <div className="p-4">
                     <h6 className="mb-2 text-slate-800 text-xl font-semibold">
-                        {title}
+                        {name}
                     </h6>
                     <p className="text-slate-600 leading-normal font-light">
-                        {descreption}
+                        {description}
                     </p>
                     <h6 className="mb-2 text-slate-800 text-xl font-semibold">
                         {price}
@@ -35,8 +38,9 @@ const PlantCard: React.FC<plantinfo> = ({ title, imageUrl, descreption , price }
                     <button
                         className="rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         type="button"
+                        data-id = {id}
                     >
-                        Read more
+                        buy
                     </button>
                 </div>
             </div>
