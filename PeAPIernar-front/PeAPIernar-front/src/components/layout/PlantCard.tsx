@@ -20,7 +20,7 @@ type payload = {
 }
 
 
-const PlantCard: React.FC<plantinfo> = ({ id, name, description, price, slug, category_id, }) => {
+const PlantCard: React.FC<plantinfo> = ({ id, name, description, price, slug }) => {
     const [data, setdata] = useState<payload>({
         sub: 1,
         role: "string",

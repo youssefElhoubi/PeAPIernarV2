@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import {  useEffect } from 'react';
 type Props = {
     isOpen: boolean;
     setIsOpen: (val: boolean) => void;
