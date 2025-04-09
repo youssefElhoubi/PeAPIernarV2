@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+// import { useState, useEffect } from "react"
 import React from 'react'
 
 
@@ -8,8 +8,6 @@ type plantinfo = {
     descreption: string,
     price : number,
 }
-
-
 
 
 const PlantCard: React.FC<plantinfo> = ({ title, imageUrl, descreption , price }) => {
@@ -42,7 +40,6 @@ const PlantCard: React.FC<plantinfo> = ({ title, imageUrl, descreption , price }
                     </button>
                 </div>
             </div>
-
         </>
     )
 }

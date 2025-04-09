@@ -43,8 +43,8 @@ Route::middleware(["JWT_validate", "isClient"])->group(function () {
     Route::get("order/orders", [OrderController::class, "myOrders"]);
 });
 
+Route::get("plants", [plant::class, "all"]);
 Route::middleware(["JWT_validate"])->group(function () {
     Route::get("plant/{slug}", [plant::class, "getPlantBySlug"]);
-    Route::get("plant/", [plant::class, "all"]);
     Route::patch("order/update/{id}", [OrderController::class, "updateStatus"]);
 });
