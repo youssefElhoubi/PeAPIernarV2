@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/signup";
 import "./App.css"
 import Home from "./pages/user/Home";
+import Privet from "./components/protected/Privet";
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login/>}></Route>
         <Route path="/signup" element={<SignUp/>}></Route>
-        <Route path="user/home" element = {<Home/>} />
+        <Route path="user/home" element = {<Privet Componnet={Home} />} />
       </Routes>
     </BrowserRouter>
     </>

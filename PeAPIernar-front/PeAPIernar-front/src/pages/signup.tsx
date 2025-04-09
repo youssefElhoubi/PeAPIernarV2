@@ -1,36 +1,47 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom'
 
 type SignUpForm = {
     name: string;
     email: string;
     password: string;
+    role: string;
 };
 
 const SignUp: React.FC = () => {
     const [formResult, setFormResult]: any = useState();
     const [token, setToken]: any = useState(null);
+    const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm<SignUpForm>();
 
     const submitData = async (data: SignUpForm) => {
-        const response = await fetch('http://peapirineV2.test/api/auth/signup', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-        });
-        const result = await response.json();
+        try {
+            data = { ...data, role: "client" }
+            const response = await fetch('http://peapirineV2.test/api/auth/singup', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            });
 
-        if (!response.ok) {
-            return setFormResult(result.message);
+            const result = await response.json();
+            console.log(result);
+
+            if (!response.ok) {
+                return setFormResult(result.message);
+            }
+
+            setFormResult(null);
+            setToken(result.token);
+            localStorage.setItem('token', result.token);
+            navigate('/user/home');
+        } catch (error) {
+            console.error(error);
         }
-
-        setFormResult(null);
-        setToken(result.token);
-        localStorage.setItem('token', result.token);
     };
 
     return (

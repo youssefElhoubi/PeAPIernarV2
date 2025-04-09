@@ -59,6 +59,7 @@ class auth extends Controller
                 'password' => 'required|string|min:8',
                 'role' => 'required|string|in:client,employee'
             ]);
+            // return response()->json(["jsdkahdkjhkjsdhkjashdkjashd"]);
 
             $user = $this->userDAO->createUser($validatedData);
 

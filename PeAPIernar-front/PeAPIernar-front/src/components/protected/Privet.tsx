@@ -7,36 +7,44 @@ type Props = {
 
 const Privet: React.FC<Props> = ({ Componnet }) => {
     const [isAuth, setIsAuth] = useState<boolean | null>(null);
-    const [token, setToken] = useState<string | null>(null);
+    const [token, setToken] = useState<string>("");
 
     useEffect(() => {
-        const checkAuth = async () => {
-            if (!token) {
-                setIsAuth(false);
-                return;
-            }
+        const localToken = localStorage.getItem("token");
+        if (localToken) {
+            setToken(localToken);
+        } else {
+            setIsAuth(false);
+        }
+    }, []);
 
-            setToken(localStorage.getItem("token"));
+    useEffect(() => {
+        if (!token) return;
 
+        const validateToken = async () => {
             try {
-                const response = await fetch("http://peapirine.test/api/token/validate", {
+                const response = await fetch("http://peapirineV2.test/api/token/validate", {
                     method: "POST",
                     headers: {
-                        "Accept": "application/json",
-                        "Authorization": token,
+                        Accept: "application/json",
+                        Authorization: token,
                     },
                 });
+
+                console.log("Validation response:", response);
                 setIsAuth(response.ok);
             } catch (error) {
-                console.log(error);
+                console.error("Validation error:", error);
                 setIsAuth(false);
             }
         };
 
-        checkAuth();
-    }, []);
+        validateToken();
+    }, [token]);
 
-    return isAuth ? <Componnet /> : <Navigate to="/login" />
+    if (isAuth === null) return <div>Loading...</div>;
+
+    return isAuth ? <Componnet /> : <Navigate to="/" />;
 };
 
 export default Privet;
