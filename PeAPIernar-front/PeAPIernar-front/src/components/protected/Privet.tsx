@@ -7,7 +7,7 @@ type Props = {
 
 const Privet: React.FC<Props> = ({ Componnet }) => {
     const [isAuth, setIsAuth] = useState<boolean | null>(null);
-    const [token, setToken] = useState<string>("");
+    const [token, setToken] = useState<string | null>("");
 
     useEffect(() => {
         const localToken = localStorage.getItem("token");
