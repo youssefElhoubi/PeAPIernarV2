@@ -34,7 +34,7 @@ class OrderDAO implements OrderDAOInterface
 
     public function getUserOrders(int $userId)
     {
-        return orders::where('client_id', $userId)->get();
+        return orders::where('client_id', $userId)->with("plants")->get();
     }
 
     public function updateOrderStatus(int $id, string $status)

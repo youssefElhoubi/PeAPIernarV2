@@ -33,7 +33,6 @@ const PlantCard: React.FC<plantinfo> = ({ id, name, description, price, slug }) 
     const [isOpen, setisOpen] = useState<boolean>(false);
 
     const [token, setToken] = useState<string>("");
-    console.log(isOpen);
 
 
     useEffect(() => {
