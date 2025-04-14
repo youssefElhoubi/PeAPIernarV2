@@ -28,7 +28,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(Catigoryinterface::class, CatugoryDAO::class);
         $this->app->bind(UserAuthInterface::class, UserAuthDAO::class);
         $this->app->bind(SalesInterface::class, SaleDAO::class);
-        $this->app->bind(SaleRepoInterface::class, SaleRepo::class);
     }
 
     /**

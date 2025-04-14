@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use APP\Repository\RepositoryIntarface\SaleRepoInterface;
+use App\DAO\DAOintretface\SalesInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class saleController extends Controller
 {
     protected $saleRepo;
-    public function __construct(SaleRepoInterface $saleRepo)
+    public function __construct(SalesInterface $saleRepo)
     {
         $this->saleRepo = $saleRepo;
     }

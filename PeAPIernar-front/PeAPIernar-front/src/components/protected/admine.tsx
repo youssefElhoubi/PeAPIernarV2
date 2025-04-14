@@ -8,7 +8,7 @@ type props = {
 }
 
 const Admine: React.FC<props> = ({component}) => {
-    const navigator = useNavigate();
+    // const navigator = useNavigate();
 
     type Root = {
         success: boolean,

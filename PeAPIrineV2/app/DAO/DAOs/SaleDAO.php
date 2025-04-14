@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\DB;
 
 class SaleDAO implements SalesInterface{
     protected orders $orders ;
-    public function __construct(orders $orders){
-        $this->orders = $orders ;
-    }
     public function totaleTales(){
         $popularPlants = DB::table('orders')
     ->join('plants', 'orders.plant_id', '=', 'plants.id')

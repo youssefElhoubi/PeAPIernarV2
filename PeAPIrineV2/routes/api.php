@@ -24,6 +24,7 @@ Route::post("token/validate", function (Request $request) {
     }
     return response()->json(["success" => true, "data" => $payload], Response::HTTP_OK);
 });
+
 Route::middleware(["JWT_validate", "isAdmin"])->group(function () {
     Route::post("plant/add", [plant::class, "addPlant"]);
     Route::patch("plant/update/{id}", [plant::class, "updatePlant"]);
@@ -37,6 +38,7 @@ Route::middleware(["JWT_validate", "isAdmin"])->group(function () {
     Route::get("statistec/popularPlants", [saleController::class, "popularPlants"]);
     Route::get("statistec/salesByCatigory", [saleController::class, "salesByCatigory"]);
 });
+
 Route::middleware(["JWT_validate", "isClient"])->group(function () {
     Route::post("order/create", [OrderController::class, "createOrder"]);
     Route::patch("order/cancel/{id}", [OrderController::class, "cancelOrder"]);
