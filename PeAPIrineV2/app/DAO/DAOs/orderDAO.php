@@ -28,7 +28,8 @@ class OrderDAO implements OrderDAOInterface
             return response()->json(['message' => 'This order cannot be canceled'], 200);
         }
 
-        $order->update(['status' => 'canceled']);
+        $order->status = 'canceled';
+        $order->save();
         return $order;
     }
 

@@ -37,6 +37,7 @@ const MyOrders: React.FC = () => {
     const [token, setToken] = useState<string>("");
 
     const [Orders, setOrders] = useState<orders[] | null>(null);
+    const [Rnadom, setRnadom] = useState("");
 
     const [data, setdata] = useState<payload>({
         sub: 1,
@@ -81,7 +82,7 @@ const MyOrders: React.FC = () => {
 
         }
         fetchOrders()
-    }, [token])
+    }, [token,Rnadom])
 
     return (
         <>

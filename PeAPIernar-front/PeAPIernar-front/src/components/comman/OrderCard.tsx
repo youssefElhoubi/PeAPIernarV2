@@ -18,9 +18,13 @@ const OrderCard: React.FC<Props> = ({ order, token }) => {
   const [message, setMessage] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const deleteOrder = async () => {
-    const response = await fetch(`http://peapirineV2.test/api/order/delete/${order.id}`, {
-      method: "DELETE",
+  const deleteOrder = async (status:string) => {
+    if (status !== "pending") {
+      return <PopUp isOpen={isOpen} setIsOpen={setIsOpen} message="you can not do this " />
+      
+    }
+    const response = await fetch(`http://peapirineV2.test/api/order/cancel/${order.id}`, {
+      method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -51,10 +55,12 @@ const OrderCard: React.FC<Props> = ({ order, token }) => {
         </div>
         <div className="px-4 pb-4 pt-0 mt-2">
           <button
-            className="rounded-md bg-red-600 py-2 px-4 text-white text-sm shadow-md hover:bg-red-700"
-            onClick={deleteOrder}
+            className={`rounded-md bg-red-600 py-2 px-4 text-white text-sm shadow-md hover:bg-red-700 ${
+              order.status === "pending" ? "" : "opacity-50 cursor-not-allowed"
+            }`}
+            onClick={()=>{deleteOrder(order.status)}}
           >
-            Delete Order
+            Delete Order 
           </button>
         </div>
       </div>
