@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\DB;
 class SaleDAO implements SalesInterface{
     protected orders $orders ;
     public function totaleTales(){
+        $totalSales = DB::table('orders')
+        ->sum('totale');
+
+    return $totalSales;
+    }
+    public function popularPlants(){
         $popularPlants = DB::table('orders')
     ->join('plants', 'orders.plant_id', '=', 'plants.id')
     ->select('plants.id', 'plants.name', DB::raw('COUNT(*) as total_orders'))
@@ -16,7 +22,6 @@ class SaleDAO implements SalesInterface{
     ->get();
     return $popularPlants;
     }
-    public function popularPlants(){}
     public function salesByCatigory(){
         $topCategory = DB::table('orders')
     ->join('palnts', 'orders.plant_id', '=', 'palnts.id') // Fix table name if needed
