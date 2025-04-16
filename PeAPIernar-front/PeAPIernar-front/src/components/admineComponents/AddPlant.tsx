@@ -3,9 +3,6 @@ import { X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
 
-export interface Root {
-    categories: Category[]
-}
 
 export interface Category {
     id: number
@@ -17,24 +14,28 @@ export interface Category {
 const AddPlant: React.FC = () => {
     const [token, setToken] = useState<string>("");
     useEffect(() => {
-        const localToken = localStorage.getItem(token);
+        const localToken = localStorage.getItem("token");
         if (localToken) {
             setToken(localToken);
         }
     }, []);
 
-    const [Catigorys, setCatigorys] = useState<Root>();
+    const [Catigorys, setCatigorys] = useState<Category[]>();
 
     useEffect(() => {
         const fetchCatigorys = async () => {
             try {
-                const response = await fetch("http://peapirine.test/api/category/all", {
+                if (!token) return
+                const response = await fetch("http://peapirineV2.test/api/category/all", {
                     headers: {
-                        Authorization: token
+                        "Authorization": token
                     }
                 });
+                console.log(token);
+
+                console.log(response);
                 const result = await response.json();
-                setCatigorys(result);
+                setCatigorys(result.categories);
             } catch (error) {
                 console.log(error);
             }
@@ -64,6 +65,8 @@ const AddPlant: React.FC = () => {
         console.log('Form submitted:', formData);
         setIsOpen(false); // Close modal on submit
     };
+    console.log(Catigorys);
+
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-8">
@@ -176,11 +179,12 @@ const AddPlant: React.FC = () => {
                                             value={formData.category}
                                             className="w-full rounded-lg border border-gray-300 px-4 py-3 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 bg-white"
                                         >
-                                            <option value="electronics">Electronics</option>
-                                            <option value="clothing">Clothing</option>
-                                            <option value="food">Food & Beverages</option>
-                                            <option value="books">Books</option>
-                                            <option value="home">Home & Garden</option>
+                                            {
+
+                                                Catigorys?.map(ele => {
+                                                    return <option key={ele.id} value={ele.id}>{ele.name}</option>
+                                                })
+                                            }
                                         </select>
                                         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                                             <svg className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
