@@ -69,4 +69,8 @@ class Catigoie extends Controller
             return response()->json(['error' => 'Something went wrong, please try again.'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+    public function AllCatigorie(){
+        $categories = categories::all();
+        return response()->json(["categories"=>$categories]);
+    }
 }

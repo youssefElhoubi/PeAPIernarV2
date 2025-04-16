@@ -30,9 +30,10 @@ Route::middleware(["JWT_validate", "isAdmin"])->group(function () {
     Route::patch("plant/update/{id}", [plant::class, "updatePlant"]);
     Route::delete("plant/delete/{id}", [plant::class, "deletePlant"]);
 
-    Route::post("category/add", [Catigoie::class, "addcategorie"]);
-    Route::patch("category/update/{id}", [Catigoie::class, "updatecategorie"]);
-    Route::delete("category/delete/{id}", [Catigoie::class, "deletecategories"]);
+    Route::post("category/add", [Catigoie::class, "addCategory"]);
+    Route::patch("category/update/{id}", [Catigoie::class, "updateCategory"]);
+    Route::delete("category/delete/{id}", [Catigoie::class, "deleteCategory"]);
+    Route::delete("category/all", [Catigoie::class, "AllCatigorie"]);
 
     Route::get("statistec/totalesales", [saleController::class, "totaleTales"]);
     Route::get("statistec/popularPlants", [saleController::class, "popularPlants"]);

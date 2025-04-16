@@ -4,6 +4,7 @@ import StateCard from './StateCard';
 const Stats: React.FC = () => {
     const [token, setToken] = useState<string>("");
     const [totaleSales, settotaleSales] = useState<number>(0);
+    const [Refrens, setRefrens] = useState<number>(0);
     useEffect(() => {
         const localToken = localStorage.getItem(token);
         if (localToken) {
@@ -29,7 +30,7 @@ const Stats: React.FC = () => {
             }
         }
         getTotalesales();
-    }, [token]);
+    }, [token,Refrens]);
     return (
         <>
             <section className="bg-white">
