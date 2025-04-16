@@ -2,6 +2,18 @@ import React, { useState, useEffect } from 'react'
 import { X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
+
+export interface Root {
+    categories: Category[]
+}
+
+export interface Category {
+    id: number
+    name: string
+    created_at: string
+    updated_at: string
+}
+
 const AddPlant: React.FC = () => {
     const [token, setToken] = useState<string>("");
     useEffect(() => {
@@ -9,7 +21,26 @@ const AddPlant: React.FC = () => {
         if (localToken) {
             setToken(localToken);
         }
-    }, [])
+    }, []);
+
+    const [Catigorys, setCatigorys] = useState<Root>();
+
+    useEffect(() => {
+        const fetchCatigorys = async () => {
+            try {
+                const response = await fetch("http://peapirine.test/api/category/all", {
+                    headers: {
+                        Authorization: token
+                    }
+                });
+                const result = await response.json();
+                setCatigorys(result);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchCatigorys()
+    }, [token])
 
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [isOpen, setIsOpen] = useState(false);
@@ -103,6 +134,9 @@ const AddPlant: React.FC = () => {
                                             required: "plant description is required"
                                         })}
                                     ></textarea>
+                                    {errors.description && (
+                                        <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>
+                                    )}
                                 </div>
 
                                 {/* Price Field */}
@@ -125,6 +159,9 @@ const AddPlant: React.FC = () => {
                                             placeholder="0.00"
                                             className="w-full rounded-lg border border-gray-300 pl-8 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200"
                                         />
+                                        {errors.price && (
+                                            <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>
+                                        )}
                                     </div>
                                 </div>
 

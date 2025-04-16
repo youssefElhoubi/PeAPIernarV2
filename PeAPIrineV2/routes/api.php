@@ -33,7 +33,7 @@ Route::middleware(["JWT_validate", "isAdmin"])->group(function () {
     Route::post("category/add", [Catigoie::class, "addCategory"]);
     Route::patch("category/update/{id}", [Catigoie::class, "updateCategory"]);
     Route::delete("category/delete/{id}", [Catigoie::class, "deleteCategory"]);
-    Route::delete("category/all", [Catigoie::class, "AllCatigorie"]);
+    Route::get("category/all", [Catigoie::class, "AllCatigorie"]);
 
     Route::get("statistec/totalesales", [saleController::class, "totaleTales"]);
     Route::get("statistec/popularPlants", [saleController::class, "popularPlants"]);
